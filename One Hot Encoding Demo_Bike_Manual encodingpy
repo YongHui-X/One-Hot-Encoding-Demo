@@ -1,0 +1,18 @@
+# This is an excercise dmeonstrating how hot one encoding works instead of using libaries.
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+import tensorflow as tf
+#LabelEncoder only works on one column at a time, 1d array
+df = pd.read_csv("bike_types_times.csv")
+
+#create new col for each categories fill with 0
+categories = ["Aero", "Climber", "Endurance"]
+df[categories] = 0
+
+#Loops through each row, reads the value in "Road_Bike_Type", and sets 1 in the matching new column.
+for i in range(len(df)):
+    value = df.loc[i, "Road_Bike_Type"]
+    df.loc[i, value] = 1
+
+df = df.drop("Road_Bike_Type", axis=1)
+print(df.head())
